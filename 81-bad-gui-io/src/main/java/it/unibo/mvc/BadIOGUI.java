@@ -14,8 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 
@@ -46,31 +46,6 @@ public class BadIOGUI {
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        /* Ex 01.01 */
-        final JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-        frame.getContentPane().add(panel);
-        panel.add(write);
-        /* Ex 01.02 */
-        final JButton read = new JButton("Read from file");
-        panel.add(read);
-        read.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                /* System.out.println("You've pressed the read button!"); */ 
-                /* Ex 01.03 */
-                try {
-                    final List<String> list = Files.readAllLines(FileSystems.getDefault().getPath(PATH), StandardCharsets.UTF_8);
-                    System.out.println(list.get(0));
-                } catch (IOException e2) {
-                    JOptionPane.showMessageDialog(frame, e2, "Error", JOptionPane.ERROR_MESSAGE);
-                    e2.printStackTrace(); // NOPMD: allowed as this is just an exercise
-                }
-            }
-   
-        });
-
         /*
          * Handlers
          */
@@ -91,6 +66,33 @@ public class BadIOGUI {
                     e1.printStackTrace(); // NOPMD: allowed as this is just an exercise
                 }
             }
+        });
+
+        /* Ex 01.01 */
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        frame.getContentPane().add(panel);
+        panel.add(write);
+        /* Ex 01.02 */
+        final JButton read = new JButton("Read from file");
+        panel.add(read);
+        read.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                /* System.out.println("You've pressed the read button!"); */ 
+                /* Ex 01.03 */
+                try {
+                    final List<String> fileLines = Files.readAllLines(Path.of(PATH), StandardCharsets.UTF_8);
+                    for (final String line : fileLines) {
+                        System.out.println(line); // NOPMD: it was requested from exercise
+                    }
+                } catch (IOException e2) {
+                    JOptionPane.showMessageDialog(frame, e2, "Error", JOptionPane.ERROR_MESSAGE);
+                    e2.printStackTrace(); // NOPMD: allowed as this is just an exercise
+                }
+            }
+
         });
     }
 
