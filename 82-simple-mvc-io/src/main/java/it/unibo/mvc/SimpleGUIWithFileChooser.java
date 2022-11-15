@@ -21,7 +21,7 @@ import java.awt.BorderLayout;
  */
 public final class SimpleGUIWithFileChooser {
 
-    private final static int PROPORTION = 4;
+    private static final int PROPORTION = 4;
     private final JFrame frame = new JFrame();
     private final Controller controller;
 
@@ -35,10 +35,10 @@ public final class SimpleGUIWithFileChooser {
         saveButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent ev) {
+            public void actionPerformed(final ActionEvent ev) {
                 controller.saveToFile(textArea.getText());
             }
-            
+
         });
         mainPanel.add(saveButton, BorderLayout.SOUTH);
 
@@ -48,7 +48,7 @@ public final class SimpleGUIWithFileChooser {
         browseFiles.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent ev) {
+            public void actionPerformed(final ActionEvent ev) {
                 final JFileChooser fileChooser = new JFileChooser();
                 final int chooserResult = fileChooser.showSaveDialog(frame);
                 switch (chooserResult) {
@@ -84,7 +84,7 @@ public final class SimpleGUIWithFileChooser {
         frame.setVisible(true);
     }
 
-    public static final void main(String[] args) {
+    public static void main(final String[] args) {
         new SimpleGUIWithFileChooser().dispay();
     }
 

@@ -16,7 +16,7 @@ import java.awt.BorderLayout;
  */
 public final class SimpleGUI {
 
-    private final static int PROPORTION = 4;
+    private static final int PROPORTION = 4;
     private final JFrame frame = new JFrame();
     private final Controller controller;
 
@@ -30,10 +30,10 @@ public final class SimpleGUI {
         saveButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent ev) {
+            public void actionPerformed(final ActionEvent ev) {
                 controller.saveToFile(textArea.getText());
             }
-            
+
         });
         panel.add(saveButton, BorderLayout.SOUTH);
         frame.setContentPane(panel);
@@ -49,7 +49,7 @@ public final class SimpleGUI {
         frame.setVisible(true);
     }
 
-    public static final void main(String[] args) {
+    public static void main(final String[] args) {
         new SimpleGUI().dispay();
     }
 
