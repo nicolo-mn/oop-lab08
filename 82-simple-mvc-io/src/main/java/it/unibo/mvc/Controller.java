@@ -17,19 +17,19 @@ public class Controller {
         currentFile = new File(DEFAULT_FILE);
     }
 
-    void setCurrentFile(final File file) {
+    public void setCurrentFile(final File file) {
         this.currentFile = file;
     }
 
-    File getCurrentFile() {
+    public File getCurrentFile() {
         return this.currentFile;
     }
 
-    String getCurrentFilePath() {
+    public String getCurrentFilePath() {
         return this.currentFile.getPath();
     }
 
-    void saveToFile(String line){
+    public void saveToFile(String line){
         try (PrintStream ps = new PrintStream(this.currentFile, StandardCharsets.UTF_8)) {
             ps.print(line);
         } catch (IOException e) {
