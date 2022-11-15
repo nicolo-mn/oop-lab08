@@ -1,6 +1,9 @@
 package it.unibo.mvc;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Application controller. Performs the I/O.
@@ -26,7 +29,12 @@ public class Controller {
         return this.currentFile.getPath();
     }
 
-    void saveToFile(String line) {
+    void saveToFile(String line){
+        try (PrintStream ps = new PrintStream(this.currentFile, StandardCharsets.UTF_8)) {
+            ps.print(line);
+        } catch (IOException e) {
+            e.printStackTrace(); // NOPMD: allowed as this is just an exercise
+        }
     }
 
 }
