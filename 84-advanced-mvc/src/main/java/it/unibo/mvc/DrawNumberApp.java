@@ -7,9 +7,9 @@ import java.util.List;
 /**
  */
 public final class DrawNumberApp implements DrawNumberViewObserver {
-    // private static final int MIN = 0;
-    // private static final int MAX = 100;
-    // private static final int ATTEMPTS = 10;
+    private static final int STANDARD_MIN = 0;
+    private static final int STANDARD_MAX = 100;
+    private static final int STANDARD_ATTEMPTS = 10;
 
     private final DrawNumber model;
     private final List<DrawNumberView> views;
@@ -28,8 +28,14 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             view.start();
         }
         
-        //this.model = new DrawNumberImpl(MIN, MAX, ATTEMPTS);
-        this.model = new DrawNumberImpl(ConfigFileReader.getMinimumNumber(), ConfigFileReader.getMaximumNumber(), ConfigFileReader.getAttemptsNumber());
+        if (ConfigFileReader.getMinimumNumber() <= ConfigFileReader.getMaximumNumber()
+            && ConfigFileReader.getAttemptsNumber() > 0) {
+                this.model = new DrawNumberImpl(ConfigFileReader.getMinimumNumber(),
+                ConfigFileReader.getMaximumNumber(),
+                ConfigFileReader.getAttemptsNumber());
+        } else {
+            this.model = new DrawNumberImpl(STANDARD_MIN, STANDARD_MAX, STANDARD_ATTEMPTS);
+        }
     }
 
     @Override
