@@ -20,6 +20,9 @@ public final class SimpleGUI {
     private final JFrame frame = new JFrame();
     private final Controller controller;
 
+    /**
+     * Default constructor, sets up the whole view.
+     */
     public SimpleGUI() {
         controller = new Controller();
         final JPanel panel = new JPanel();
@@ -40,6 +43,9 @@ public final class SimpleGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Sets the width and height of the GUI window and makes the GUI visible.
+     */
     public void dispay() {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
@@ -48,7 +54,10 @@ public final class SimpleGUI {
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }
-
+    /**
+     * Main function, starts a GUI.
+     * @param args
+     */
     public static void main(final String[] args) {
         new SimpleGUI().dispay();
     }

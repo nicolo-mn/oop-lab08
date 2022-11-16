@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -21,8 +23,13 @@ public final class SimpleGUI {
 
     private static final int PROPORTION = 4;
     private final JFrame frame = new JFrame();
-    private final Controller controller;
+    private final Controller controller; //NOPMD: the view in MVC architecture is designed to have a controller field
 
+    /**
+     * Default constructor, sets up the whole view.
+     * @param controller
+     */
+    @SuppressFBWarnings
     public SimpleGUI(final Controller controller) {
         this.controller = controller;
         final JPanel panel = new JPanel();
@@ -45,11 +52,12 @@ public final class SimpleGUI {
 
             @Override
             public void actionPerformed(final ActionEvent arg0) {
-                String toDisplay = "";
-                for (String string : controller.getHistory()) {
-                    toDisplay = toDisplay + string + "\n";
+                final StringBuilder toDisplay = new StringBuilder();
+                for (final String string : controller.getHistory()) {
+                    toDisplay.append(string);
+                    toDisplay.append('\n');
                 }
-                textArea.setText(toDisplay);
+                textArea.setText(toDisplay.toString());
             }
 
         });
@@ -63,6 +71,9 @@ public final class SimpleGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Sets the width and height of the GUI window and makes the GUI visible.
+     */
     public void dispay() {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
@@ -72,6 +83,10 @@ public final class SimpleGUI {
         frame.setVisible(true);
     }
 
+    /**
+     * Main function, starts a GUI.
+     * @param args
+     */
     public static void main(final String[] args) {
         new SimpleGUI(new SimpleController()).dispay();
     }

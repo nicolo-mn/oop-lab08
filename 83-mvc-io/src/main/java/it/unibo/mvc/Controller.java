@@ -7,11 +7,26 @@ import java.util.List;
  */
 public interface Controller {
 
-    void setNextString(String string) throws NullPointerException;
+    /**
+     * Sets next string to be printed.
+     * @param string
+     */
+    void setNextString(String string);
 
+    /**
+     * Gets next string to be printed.
+     * @return next string to be printed
+     */
     String getNexString();
 
+    /**
+     * Gets the history of the printed strings.
+     * @return a list containing the printed strings
+     */
     List<String> getHistory();
 
-    void printString() throws IllegalStateException; 
+    /**
+     * Prints the current string.
+     */
+    void printString(); 
 }

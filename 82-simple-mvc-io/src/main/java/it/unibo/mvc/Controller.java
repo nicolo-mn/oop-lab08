@@ -14,22 +14,46 @@ public class Controller {
 
     private File currentFile;
 
+    /**
+     * Default constructor. Initializes currentFile to the default file.
+     * 
+     */
     public Controller() {
         currentFile = new File(DEFAULT_FILE);
     }
 
+    /**
+     * Sets the current file.
+     * 
+     * @param file
+     */
     public void setCurrentFile(final File file) {
         this.currentFile = file;
     }
 
+    /**
+     * Gets the current file.
+     * 
+     * @return currentFile
+     */
     public File getCurrentFile() {
         return this.currentFile;
     }
 
+    /**
+     * Gets the current file path.
+     * 
+     * @return the current file path
+     */
     public String getCurrentFilePath() {
         return this.currentFile.getPath();
     }
 
+    /**
+     * Saves a string to the current file.
+     * 
+     * @param line
+     */
     public void saveToFile(final String line) {
         try (PrintStream ps = new PrintStream(this.currentFile, StandardCharsets.UTF_8)) {
             ps.print(line);

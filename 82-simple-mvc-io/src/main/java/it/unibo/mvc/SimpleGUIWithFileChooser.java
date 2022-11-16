@@ -25,6 +25,9 @@ public final class SimpleGUIWithFileChooser {
     private final JFrame frame = new JFrame();
     private final Controller controller;
 
+    /**
+     * Default constructor, sets up the whole view.
+     */
     public SimpleGUIWithFileChooser() {
         controller = new Controller();
         final JPanel mainPanel = new JPanel();
@@ -65,7 +68,7 @@ public final class SimpleGUIWithFileChooser {
 
         });
 
-        JPanel upperPanel = new JPanel();
+        final JPanel upperPanel = new JPanel();
         upperPanel.setLayout(new BorderLayout());
         mainPanel.add(upperPanel, BorderLayout.NORTH);
         upperPanel.add(fileChosen, BorderLayout.CENTER);
@@ -75,6 +78,9 @@ public final class SimpleGUIWithFileChooser {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Sets the width and height of the GUI window and makes the GUI visible.
+     */
     public void dispay() {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
@@ -83,7 +89,10 @@ public final class SimpleGUIWithFileChooser {
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }
-
+    /**
+     * Main function, starts a GUI.
+     * @param args
+     */
     public static void main(final String[] args) {
         new SimpleGUIWithFileChooser().dispay();
     }
