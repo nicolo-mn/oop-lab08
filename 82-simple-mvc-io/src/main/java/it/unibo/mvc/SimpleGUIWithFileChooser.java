@@ -28,8 +28,8 @@ public final class SimpleGUIWithFileChooser {
     /**
      * Default constructor, sets up the whole view.
      */
-    public SimpleGUIWithFileChooser() {
-        controller = new Controller();
+    public SimpleGUIWithFileChooser(Controller controller) {
+        this.controller = controller;
         final JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         final JTextArea textArea = new JTextArea();
@@ -94,7 +94,7 @@ public final class SimpleGUIWithFileChooser {
      * @param args
      */
     public static void main(final String[] args) {
-        new SimpleGUIWithFileChooser().dispay();
+        new SimpleGUIWithFileChooser(new Controller()).dispay();
     }
 
 }

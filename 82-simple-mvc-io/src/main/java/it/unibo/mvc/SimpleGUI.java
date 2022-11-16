@@ -23,8 +23,8 @@ public final class SimpleGUI {
     /**
      * Default constructor, sets up the whole view.
      */
-    public SimpleGUI() {
-        controller = new Controller();
+    public SimpleGUI(Controller controller) {
+        this.controller = controller;
         final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         final JTextArea textArea = new JTextArea();
@@ -59,7 +59,7 @@ public final class SimpleGUI {
      * @param args
      */
     public static void main(final String[] args) {
-        new SimpleGUI().dispay();
+        new SimpleGUI(new Controller()).dispay();
     }
 
 
