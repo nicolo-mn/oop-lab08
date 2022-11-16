@@ -8,53 +8,35 @@ import java.util.StringTokenizer;
 
 public class ConfigFileReader {
 
-    static {
-        final String PATH = System.getProperty("user.dir") + "/src/main/resources/config.yml";
-        final int MIN_LINE = 0;
-        final int MAX_LINE = 1;
-        final int ATTEMPTS_LINE = 2;
-        final int TOTALLINES = 3;
+    private final Configuration conf;
 
-        try (BufferedReader r = new BufferedReader(
-            new InputStreamReader(
-                new FileInputStream(PATH)
-            )
-        )) {
-            for (int i = 0; i < TOTALLINES; i++) {
-                StringTokenizer tok = new StringTokenizer(r.readLine(), ": ");
-                tok.nextToken();
-                int value = Integer.parseInt(tok.nextToken());
-                switch (i) {
-                    case MIN_LINE:
-                        MIN = value;
-                        break;
-                    case MAX_LINE:
-                        MAX = value;
-                        break;
-                    case ATTEMPTS_LINE:
-                        ATTEMPTS = value;
-                        break;
+    ConfigFileReader(String configFile) {
+
+        final Configuration.Builder buildConf = new Configuration.Builder();
+
+        try (var contents = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(configFile)))) {
+            for (var configLine = contents.readLine(); configLine != null; configLine = contents.readLine()) {
+                final String[] lineElements = configLine.split(":");
+                if (lineElements.length == 2) {
+                    final int value = Integer.parseInt(lineElements[1].trim());
+                    if (lineElements[0].contains("max")) {
+                        buildConf.setMax(value);
+                    } else if (lineElements[0].contains("min")) {
+                        buildConf.setMin(value);
+                    } else if (lineElements[0].contains("attempts")) {
+                        buildConf.setAttempts(value);
+                    }
+                } else {
+                    throw new IllegalArgumentException("I cannot understand \"" + configLine + '"');
                 }
             }
-        } catch (IOException e){
+        } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
-
         }
+        conf = buildConf.build();
     }
 
-    private static int MIN;
-    private static int MAX;
-    private static int ATTEMPTS;
-
-    static public int getMinimumNumber() {
-        return MIN;
-    }
-
-    static public int getMaximumNumber() {
-        return MAX;
-    }
-
-    static public int getAttemptsNumber() {
-        return ATTEMPTS;
+    public Configuration getConfiguration() {
+        return conf.isConsistent() ? conf : new Configuration.Builder().build();
     }
 }

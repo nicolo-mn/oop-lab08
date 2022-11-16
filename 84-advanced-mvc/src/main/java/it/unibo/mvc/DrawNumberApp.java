@@ -7,9 +7,6 @@ import java.util.List;
 /**
  */
 public final class DrawNumberApp implements DrawNumberViewObserver {
-    private static final int STANDARD_MIN = 0;
-    private static final int STANDARD_MAX = 100;
-    private static final int STANDARD_ATTEMPTS = 10;
 
     private final DrawNumber model;
     private final List<DrawNumberView> views;
@@ -18,7 +15,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      * @param views
      *            the views to attach
      */
-    public DrawNumberApp(final DrawNumberView... views) {
+    public DrawNumberApp(final String configFile, final DrawNumberView... views) {
         /*
          * Side-effect proof
          */
@@ -27,15 +24,8 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             view.setObserver(this);
             view.start();
         }
-        
-        if (ConfigFileReader.getMinimumNumber() <= ConfigFileReader.getMaximumNumber()
-            && ConfigFileReader.getAttemptsNumber() > 0) {
-                this.model = new DrawNumberImpl(ConfigFileReader.getMinimumNumber(),
-                ConfigFileReader.getMaximumNumber(),
-                ConfigFileReader.getAttemptsNumber());
-        } else {
-            this.model = new DrawNumberImpl(STANDARD_MIN, STANDARD_MAX, STANDARD_ATTEMPTS);
-        }
+        final Configuration conf = new ConfigFileReader(configFile).getConfiguration();
+        this.model = new DrawNumberImpl(conf.getMin(), conf.getMax(), conf.getAttempts());
     }
 
     @Override
@@ -75,6 +65,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      */
     public static void main(final String... args) throws FileNotFoundException {
         new DrawNumberApp(
+            "config.yml",
             new DrawNumberViewImpl(), 
             new DrawNumberViewImpl(), 
             new PrintStreamView(System.out),

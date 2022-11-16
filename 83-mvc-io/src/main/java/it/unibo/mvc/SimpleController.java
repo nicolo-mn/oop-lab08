@@ -2,6 +2,7 @@ package it.unibo.mvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 
@@ -21,10 +22,7 @@ public final class SimpleController implements Controller {
 
     @Override
     public void setNextString(final String string) {
-        if (string == null) {
-            throw new IllegalArgumentException("The parameter string can't be null!");
-        }
-        next = string;
+        next = Objects.requireNonNull(string, "The string can't be null!");
     }
 
     @Override
@@ -39,6 +37,9 @@ public final class SimpleController implements Controller {
 
     @Override
     public void printString() {
+        if (this.next == null) {
+            throw new IllegalStateException("There is no string set");
+        }
         this.history.add(this.next);
         System.out.println(this.next); // NOPMD: requested by the exercise to print on stdout
         this.next = null;
