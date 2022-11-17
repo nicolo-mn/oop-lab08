@@ -25,5 +25,9 @@ public interface DrawNumberView {
      */
     void result(DrawResult res);
 
+    /**
+     * Displays an error with a given message.
+     * @param message
+     */
     void displayError(String message);
 }
